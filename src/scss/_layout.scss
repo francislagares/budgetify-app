@@ -1,0 +1,90 @@
+/**********************************************
+*** TOP PART
+**********************************************/
+
+.top {
+  height: 40vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+    url(../img/back.png);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.budget {
+  position: absolute;
+  width: 350px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: $color-white;
+
+  &__title {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+
+  &__value {
+    font-weight: 300;
+    font-size: 46px;
+    text-align: center;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+  }
+
+  &__income,
+  &__expenses {
+    padding: 12px;
+    text-transform: uppercase;
+  }
+
+  &__income {
+    margin-bottom: 10px;
+    background-color: $color-primary-blue;
+  }
+
+  &__expenses {
+    background-color: $color-primary-red;
+  }
+
+  &__income--text,
+  &__expenses--text {
+    float: left;
+    font-size: 13px;
+    color: $color-grey-dark-2;
+    margin-top: 2px;
+  }
+
+  &__income--value,
+  &__expenses--value {
+    letter-spacing: 1px;
+    float: left;
+  }
+
+  &__income--percentage,
+  &__expenses--percentage {
+    float: left;
+    width: 34px;
+    font-size: 11px;
+    padding: 3px 0;
+    margin-left: 10px;
+  }
+
+  &__expenses--percentage {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-align: center;
+    border-radius: 3px;
+  }
+}
+
+.right {
+  float: right;
+}
+.red {
+  color: $color-primary-red !important;
+}
+.red-focus:focus {
+  border: 1px solid $color-primary-red !important;
+}

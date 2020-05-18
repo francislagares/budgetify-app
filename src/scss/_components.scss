@@ -1,0 +1,188 @@
+/**********************************************
+*** BOTTOM PART
+**********************************************/
+
+/***** FORM *****/
+.add {
+  padding: 14px;
+  border-bottom: 1px solid $color-grey-light-1;
+  background-color: $color-grey-light-2;
+
+  &__container {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__type {
+    width: 55px;
+    border: 1px solid $color-grey-light-1;
+    height: 44px;
+    font-size: 18px;
+    color: inherit;
+    background-color: $color-white;
+    margin-right: 10px;
+    font-weight: 300;
+    transition: border 0.3s;
+  }
+
+  &__description,
+  &__value {
+    border: 1px solid $color-grey-light-1;
+    background-color: $color-white;
+    color: inherit;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 12px 15px;
+    margin-right: 10px;
+    border-radius: 5px;
+    transition: border 0.3s;
+  }
+
+  &__description {
+    width: 400px;
+  }
+  &__value {
+    width: 100px;
+  }
+
+  &__btn {
+    font-size: 35px;
+    background: none;
+    border: none;
+    color: $color-primary-blue;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.1;
+    margin-left: 10px;
+  }
+
+  &__btn:active {
+    transform: translateY(2px);
+  }
+
+  &__type:focus,
+  &__description:focus,
+  &__value:focus {
+    outline: none;
+    border: 1px solid $color-primary-blue;
+  }
+
+  &__btn:focus {
+    outline: none;
+  }
+}
+
+/***** LISTS *****/
+.container {
+  width: 1000px;
+  margin: 60px auto;
+}
+
+.income {
+  float: left;
+  width: 475px;
+  margin-right: 50px;
+
+  &__title {
+    color: $color-primary-blue;
+  }
+}
+
+.income .item__value,
+.income .item__delete--btn {
+  color: $color-primary-blue;
+}
+
+.expenses {
+  float: left;
+  width: 475px;
+
+  &__title {
+    color: $color-primary-red;
+  }
+}
+
+.expenses .item__value,
+.expenses .item__percentage,
+.expenses .item__delete--btn {
+  color: $color-primary-red;
+}
+
+.item {
+  padding: 13px;
+  border-bottom: 1px solid $color-grey-light-1;
+
+  &:first-child {
+    border-top: 1px solid $color-grey-light-1;
+  }
+  &:nth-child(even) {
+    background-color: $color-grey-light-2;
+  }
+
+  &__description {
+    float: left;
+  }
+
+  &__value {
+    float: left;
+    transition: transform 0.3s;
+  }
+
+  &__percentage {
+    float: left;
+    margin-left: 20px;
+    transition: transform 0.3s;
+    font-size: 11px;
+    background-color: $color-primary-pink;
+    padding: 3px;
+    border-radius: 3px;
+    width: 32px;
+    text-align: center;
+  }
+
+  &__delete {
+    float: left;
+  }
+
+  &__delete--btn {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    display: none;
+  }
+
+  &__delete--btn:focus {
+    outline: none;
+  }
+  &__delete--btn:active {
+    transform: translateY(2px);
+  }
+
+  &:hover &__delete--btn {
+    display: block;
+  }
+  &:hover &__value {
+    transform: translateX(-20px);
+  }
+  &:hover &__percentage {
+    transform: translateX(-20px);
+  }
+}
+
+.unpaid {
+  background-color: $color-primary-pink !important;
+  cursor: pointer;
+  color: $color-primary-red;
+}
+
+.unpaid .item__percentage {
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+}
+.unpaid:hover .item__description {
+  font-weight: 900;
+}

@@ -1,0 +1,44 @@
+/**********************************************
+*** GENERAL
+**********************************************/
+
+$color-primary-red: #ff5049;
+$color-primary-blue: #28b9b5;
+$color-primary-pink: #ffdad9;
+
+$color-grey-light-1: #e7e7e7;
+$color-grey-light-2: #f7f7f7;
+
+$color-grey-dark-1: #555;
+$color-grey-dark-2: #444;
+
+$color-white: #fff;
+$color-black: #000;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.clearfix::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+body {
+  color: $color-grey-dark-1;
+  font-family: Open Sans;
+  font-size: 16px;
+  position: relative;
+  height: 100vh;
+  font-weight: 400;
+}
+
+h2 {
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
