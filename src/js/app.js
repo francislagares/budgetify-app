@@ -3,9 +3,9 @@
  * Module Pattern for better separation
  * of concerns & maintenance of code
  ****************************************/
-const budgetController = (function () {})();
+const budgetController = (() => {})();
 
-const UIController = (function () {
+const UIController = (() => {
   let DOMstrings = {
     inputType: '.add__type',
     inputDescription: '.add__description',
@@ -14,37 +14,45 @@ const UIController = (function () {
   };
 
   return {
-    getInput: function () {
+    getInput: () => {
       return {
         type: document.querySelector(DOMstrings.inputType).value,
         description: document.querySelector(DOMstrings.inputDescription).value,
         value: document.querySelector(DOMstrings.inputValue).value
       };
     },
-    getDOMstrings: function () {
+    getDOMstrings: () => {
       return DOMstrings;
     }
   };
 })();
 
-const controller = (function (budgetCtrl, UICtrl) {
-  let DOM = UICtrl.getDOMstrings();
+const controller = ((budgetCtrl, UICtrl) => {
+  const setupEventListeners = () => {
+    let DOM = UICtrl.getDOMstrings();
+    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+
+    document.addEventListener('keypress', (event) => {
+      if (event.KeyCode === 13 || event.which === 13) {
+        ctrlAddItem();
+      }
+    });
+  };
 
   const ctrlAddItem = () => {
     // 1. Get the filled input data
     let input = UICtrl.getInput();
-    console.log(input);
     // 2. Add the item to the budget controller
     // 3. Add the item to the UI
     // 4. Calculate the budget
     // 5. Display the budget on the UI
   };
 
-  document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
-
-  document.addEventListener('keypress', (event) => {
-    if (event.KeyCode === 13 || event.which === 13) {
-      ctrlAddItem();
+  return {
+    init: () => {
+      return setupEventListeners();
     }
-  });
+  };
 })(budgetController, UIController);
+
+controller.init();
