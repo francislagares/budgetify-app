@@ -18,7 +18,7 @@ module.exports = merge(common, {
     contentBase: 'dist',
     open: true, // Tells dev-server to open the browser after server had been started
     overlay: true, // Shows a full-screen overlay with errors or warnings
-    hot: false, // update changes without full refresh in the browser
+    hot: true, // update changes without full refresh in the browser
     inline: true,
     stats: {
       colors: true
