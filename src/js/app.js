@@ -3,7 +3,52 @@
  * Module Pattern for better separation
  * of concerns & maintenance of code
  ****************************************/
-const budgetController = (() => {})();
+const budgetController = (() => {
+  const Expense = function (id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+  };
+
+  const Income = function (id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+  };
+
+  const data = {
+    allItems: {
+      inc: [],
+      exp: []
+    },
+    totals: {
+      exp: 0,
+      inc: 0
+    }
+  };
+
+  return {
+    addItem: (type, desc, val) => {
+      let newItem, ID;
+      // Create new ID
+      if (data.allItems[type].length > 0) {
+        ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+      } else {
+        ID = 0;
+      }
+      // Create new item based on type
+      if (type === 'exp') {
+        newItem = new Expense(ID, desc, val);
+      } else if (type === 'inc') {
+        newItem = new Income(ID, desc, val);
+      }
+      // Add item to data structure
+      data.allItems[type].push(newItem);
+      // Return the new item
+      return newItem;
+    }
+  };
+})();
 
 const UIController = (() => {
   let DOMstrings = {
@@ -21,6 +66,7 @@ const UIController = (() => {
         value: document.querySelector(DOMstrings.inputValue).value
       };
     },
+
     getDOMstrings: () => {
       return DOMstrings;
     }
@@ -38,11 +84,12 @@ const controller = ((budgetCtrl, UICtrl) => {
       }
     });
   };
-
+  // This is the main control center function of the application
   const ctrlAddItem = () => {
     // 1. Get the filled input data
     let input = UICtrl.getInput();
     // 2. Add the item to the budget controller
+    let item = budgetCtrl.addItem(input.type, input.description, input.value);
     // 3. Add the item to the UI
     // 4. Calculate the budget
     // 5. Display the budget on the UI
