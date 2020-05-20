@@ -46,7 +46,9 @@ const budgetController = (() => {
       data.allItems[type].push(newItem);
       // Return the new item
       return newItem;
-    }
+    },
+
+    calculateBudget: () => {}
   };
 })();
 
@@ -103,6 +105,7 @@ const UIController = (() => {
       // Insert the HTML into the DOM
       document.querySelector(element).insertAdjacentHTML('beforeend', html);
     },
+
     clearFields: () => {
       // Obtain all input elements
       let fields = document.querySelectorAll(
@@ -139,14 +142,18 @@ const controller = ((budgetCtrl, UICtrl) => {
   const ctrlAddItem = () => {
     // 1. Get the filled input data
     let input = UICtrl.getInput();
-    // 2. Add the item to the budget controller
-    let item = budgetCtrl.addItem(input.type, input.description, input.value);
-    // 3. Add the item to the UI
-    UICtrl.addListItem(item, input.type);
-    // 4. Clear input fields
-    UICtrl.clearFields();
-    // 5. Calculate the budget
-    // 6. Display the budget on the UI
+
+    if (input.description !== '' && !isNaN(input.value) && input.value > 0) {
+      // 2. Add the item to the budget controller
+      let item = budgetCtrl.addItem(input.type, input.description, input.value);
+      // 3. Add the item to the UI
+      UICtrl.addListItem(item, input.type);
+      // 4. Clear input fields
+      UICtrl.clearFields();
+      // 5. Calculate and update budget
+
+      // 6. Display the budget on the UI
+    }
   };
 
   return {
