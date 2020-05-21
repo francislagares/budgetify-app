@@ -98,7 +98,8 @@ const UIController = (() => {
     budgetLabel: '.budget__value',
     incomeLabel: '.budget__income--value',
     expensesLabel: '.budget__expenses--value',
-    percentageLabel: '.budget__expenses--percentage'
+    percentageLabel: '.budget__expenses--percentage',
+    container: '.container'
   };
 
   return {
@@ -114,7 +115,7 @@ const UIController = (() => {
       // Create HTML template literal with placeholder variables
       if (type === 'inc') {
         element = DOMstrings.incomeContainer;
-        html = `<div class="item clearfix" id="income-${obj.id}">
+        html = `<div class="item clearfix" id="inc-${obj.id}">
                   <div class="item__description">${obj.description}</div>
                   <div class="right clearfix">
                     <div class="item__value">+ ${obj.value}</div>
@@ -127,7 +128,7 @@ const UIController = (() => {
                 </div>`;
       } else if (type === 'exp') {
         element = DOMstrings.expensesContainer;
-        html = `<div class="item clearfix" id="expense-${obj.id}">
+        html = `<div class="item clearfix" id="exp-${obj.id}">
                   <div class="item__description">${obj.description}</div>
                   <div class="right clearfix">
                     <div class="item__value">- ${obj.value}</div>
@@ -187,6 +188,7 @@ const controller = ((budgetCtrl, UICtrl) => {
         ctrlAddItem();
       }
     });
+    document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
   };
 
   const updateBudget = () => {
@@ -215,6 +217,22 @@ const controller = ((budgetCtrl, UICtrl) => {
       // 5. Calculate and update budget
       updateBudget();
       // 6. Display the budget on the UI
+    }
+  };
+
+  const ctrlDeleteItem = (event) => {
+    let itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+    if (itemID) {
+      let splitID = itemID.split('-');
+      let type = splitID[0];
+      let ID = splitID[1];
+
+      // 1. Delete item from data structure
+
+      // 2. Delete item from UI
+
+      // 3. Update and show new budget
     }
   };
 
