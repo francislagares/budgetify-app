@@ -8,6 +8,19 @@ const budgetController = (() => {
     this.id = id;
     this.description = description;
     this.value = value;
+    this.percentage = -1;
+  };
+
+  Expense.prototype.calcPercentage = function (totalIncome) {
+    if (totalIncome > 0) {
+      this.percentage = Math.round((this.value / totalIncome) * 100);
+    } else {
+      this.percentage = -1;
+    }
+  };
+
+  Expense.prototype.getPercentage = function () {
+    return this.percentage;
   };
 
   const Income = function (id, description, value) {
@@ -81,6 +94,19 @@ const budgetController = (() => {
       } else {
         data.percentage = -1;
       }
+    },
+
+    calculatePercentage: () => {
+      data.allItems.exp.forEach((el) => {
+        return el.calcPercentage(data.totals.inc);
+      });
+    },
+
+    getPercentages: () => {
+      let allPerc = data.allItems.exp.map((el) => {
+        return el.getPercentage();
+      });
+      return allPerc;
     },
 
     getBudget: () => {
@@ -216,6 +242,15 @@ const controller = ((budgetCtrl, UICtrl) => {
     UICtrl.displayBudget(budget);
   };
 
+  const updatePercentages = () => {
+    // 1. Calculate percentages
+    budgetCtrl.calculatePercentage();
+    // 2. Read percentages from budget controller
+    let percentages = budgetCtrl.getPercentages();
+    // 3. Update UI with new percentages
+    console.log(percentages);
+  };
+
   // This is the main control center function of the application
   const ctrlAddItem = () => {
     // 1. Get the filled input data
@@ -232,7 +267,8 @@ const controller = ((budgetCtrl, UICtrl) => {
       UICtrl.clearFields();
       // 5. Calculate and update budget
       updateBudget();
-      // 6. Display the budget on the UI
+      // 6. Calculate and update percentages
+      updatePercentages();
     }
   };
 
@@ -250,6 +286,8 @@ const controller = ((budgetCtrl, UICtrl) => {
       UICtrl.deleteListItem(itemID);
       // 3. Update and show new budget
       updateBudget();
+      // 4. Calculate and update percentages
+      updatePercentages();
     }
   };
 
