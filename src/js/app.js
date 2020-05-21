@@ -157,6 +157,11 @@ const UIController = (() => {
       document.querySelector(element).insertAdjacentHTML('beforeend', html);
     },
 
+    deleteListItem: (selectorID) => {
+      let el = document.getElementById(selectorID);
+      el.parentNode.removeChild(el);
+    },
+
     clearFields: () => {
       // Obtain all input elements
       let fields = document.querySelectorAll(
@@ -242,8 +247,9 @@ const controller = ((budgetCtrl, UICtrl) => {
       // 1. Delete item from data structure
       budgetCtrl.deleteItem(type, ID);
       // 2. Delete item from UI
-
+      UICtrl.deleteListItem(itemID);
       // 3. Update and show new budget
+      updateBudget();
     }
   };
 
