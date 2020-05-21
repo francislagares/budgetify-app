@@ -136,7 +136,8 @@ const UIController = (() => {
     incomeLabel: '.budget__income--value',
     expensesLabel: '.budget__expenses--value',
     percentageLabel: '.budget__expenses--percentage',
-    container: '.container'
+    container: '.container',
+    expensesPercLabel: '.item__percentage'
   };
 
   return {
@@ -208,10 +209,28 @@ const UIController = (() => {
       document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
       document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
       if (obj.percentage > 0) {
-        document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + '%';
+        document.querySelector(DOMstrings.percentageLabel).textContent = `${obj.percentage}%`;
       } else {
         document.querySelector(DOMstrings.percentageLabel).textContent = '---';
       }
+    },
+
+    displayPercentages: (percentages) => {
+      let fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
+
+      let nodeListForEach = (list, callback) => {
+        for (let i = 0; i < list.length; i++) {
+          callback(list[i], i);
+        }
+      };
+
+      nodeListForEach(fields, (el, i) => {
+        if (percentages[i] > 0) {
+          el.textContent = `${percentages[i]}%`;
+        } else {
+          el.textContent = `---`;
+        }
+      });
     },
 
     getDOMstrings: () => {
@@ -248,7 +267,7 @@ const controller = ((budgetCtrl, UICtrl) => {
     // 2. Read percentages from budget controller
     let percentages = budgetCtrl.getPercentages();
     // 3. Update UI with new percentages
-    console.log(percentages);
+    UICtrl.displayPercentages(percentages);
   };
 
   // This is the main control center function of the application
