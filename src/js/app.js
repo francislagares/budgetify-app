@@ -140,6 +140,33 @@ const UIController = (() => {
     expensesPercLabel: '.item__percentage'
   };
 
+  const formatNumber = (number, type) => {
+    /***
+     * This function adds + or - before numbers
+     * exacts 2 decimal points
+     * comma separates the thousands
+     *
+     * e.g.
+     * 2310.4576 will format to 2,310.46
+     * 2000 => 2.000.00
+     */
+    let num = Math.abs(number);
+    num = num.toFixed(2);
+
+    let numSplit = num.split('.');
+
+    int = numSplit[0];
+
+    if (int.length > 3) {
+      int = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, 3); // input 23510,000
+      // output = 23,510
+    }
+
+    dec = numSplit[1];
+
+    return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
+  };
+
   return {
     getInput: () => {
       return {
@@ -149,14 +176,15 @@ const UIController = (() => {
       };
     },
     addListItem: (obj, type) => {
-      let html, element;
+      let html, element, numFormat;
       // Create HTML template literal with placeholder variables
       if (type === 'inc') {
         element = DOMstrings.incomeContainer;
+        numFormat = formatNumber(obj.value, type);
         html = `<div class="item clearfix" id="inc-${obj.id}">
                   <div class="item__description">${obj.description}</div>
                   <div class="right clearfix">
-                    <div class="item__value">+ ${obj.value}</div>
+                    <div class="item__value">${numFormat}</div>
                     <div class="item__delete">
                       <button class="item__delete--btn">
                         <i class="ion-ios-close-outline"></i>
@@ -166,10 +194,11 @@ const UIController = (() => {
                 </div>`;
       } else if (type === 'exp') {
         element = DOMstrings.expensesContainer;
+        numFormat = formatNumber(obj.value, type);
         html = `<div class="item clearfix" id="exp-${obj.id}">
                   <div class="item__description">${obj.description}</div>
                   <div class="right clearfix">
-                    <div class="item__value">- ${obj.value}</div>
+                    <div class="item__value">${numFormat}</div>
                     <div class="item__percentage">21%</div>
                     <div class="item__delete">
                       <button class="item__delete--btn">
@@ -205,9 +234,18 @@ const UIController = (() => {
     },
 
     displayBudget: (obj) => {
-      document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
-      document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
-      document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
+      let type;
+      obj.budget > 0 ? (type = 'inc') : (type = 'exp');
+
+      document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(obj.budget, type);
+      document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(
+        obj.totalInc,
+        'inc'
+      );
+      document.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(
+        obj.totalExp,
+        'exp'
+      );
       if (obj.percentage > 0) {
         document.querySelector(DOMstrings.percentageLabel).textContent = `${obj.percentage}%`;
       } else {
